@@ -42,16 +42,16 @@ void bmm150calibrate(uint32_t timeout) {
     {
       value_x_min = bmm.raw_mag_data.raw_datax;
 #ifdef BMMDEBUG
-      SerialUSB.print(F("Update value_x_min: "));
-      SerialUSB.println(value_x_min);
+      Serial.print(F("Update value_x_min: "));
+      Serial.println(value_x_min);
 #endif
     }
     else if (value_x_max < bmm.raw_mag_data.raw_datax)
     {
       value_x_max = bmm.raw_mag_data.raw_datax;
 #ifdef BMMDEBUG
-      SerialUSB.print(F("update value_x_max: "));
-      SerialUSB.println(value_x_max);
+      Serial.print(F("update value_x_max: "));
+      Serial.println(value_x_max);
 #endif
     }
 
@@ -60,16 +60,16 @@ void bmm150calibrate(uint32_t timeout) {
     {
       value_y_min = bmm.raw_mag_data.raw_datay;
 #ifdef BMMDEBUG
-      SerialUSB.print(F("Update value_y_min: "));
-      SerialUSB.println(value_y_min);
+      Serial.print(F("Update value_y_min: "));
+      Serial.println(value_y_min);
 #endif
     }
     else if (value_y_max < bmm.raw_mag_data.raw_datay)
     {
       value_y_max = bmm.raw_mag_data.raw_datay;
 #ifdef BMMDEBUG
-      SerialUSB.print(F("update value_y_max: "));
-      SerialUSB.println(value_y_max);
+      Serial.print(F("update value_y_max: "));
+      Serial.println(value_y_max);
 #endif
     }
 
@@ -78,16 +78,16 @@ void bmm150calibrate(uint32_t timeout) {
     {
       value_z_min = bmm.raw_mag_data.raw_dataz;
 #ifdef BMMDEBUG
-      SerialUSB.print(F("Update value_z_min: "));
-      SerialUSB.println(value_z_min);
+      Serial.print(F("Update value_z_min: "));
+      Serial.println(value_z_min);
 #endif
     }
     else if (value_z_max < bmm.raw_mag_data.raw_dataz)
     {
       value_z_max = bmm.raw_mag_data.raw_dataz;
 #ifdef BMMDEBUG
-      SerialUSB.print(F("update value_z_max: "));
-      SerialUSB.println(value_z_max);
+      Serial.print(F("update value_z_max: "));
+      Serial.println(value_z_max);
 #endif
     }
   }
@@ -96,7 +96,7 @@ void bmm150calibrate(uint32_t timeout) {
   value_offset.y = value_y_min + (value_y_max - value_y_min) / 2;
   value_offset.z = value_z_min + (value_z_max - value_z_min) / 2;
 #ifdef BMMDEBUG
-  SerialUSB.print(F("\n\rCalibrate done.."));
+  Serial.print(F("\n\rCalibrate done.."));
 #endif
 }
 
@@ -124,24 +124,24 @@ float heading() {
   float xyHeadingDegrees = xyHeading * 180 / M_PI;
   float zxHeadingDegrees = zxHeading * 180 / M_PI;
 #ifdef BMMDEBUG
-  SerialUSB.print(F("Heading: "));
-  SerialUSB.println(headingDegrees);
+  Serial.print(F("Heading: "));
+  Serial.println(headingDegrees);
 #endif
   return (headingDegrees);
 
 }
 
 void setup() {
-  SerialUSB.begin(9600);
-
+  Serial.begin(115200);
+  while(!Serial);
   if (bmm.initialize() == BMM150_E_ID_NOT_CONFORM) {
-    SerialUSB.println(F("BMM150 ID can not read!"));
+    Serial.println(F("BMM150 ID can not read!"));
     while (1);
   } else {
-    SerialUSB.println(F("Initialize done!"));
+    Serial.println(F("Initialize done!"));
   }
 
-  SerialUSB.println(F("Start figure-8 calibration after 3 seconds."));
+  Serial.println(F("Start figure-8 calibration after 3 seconds."));
   delay(3000);
   bmm150calibrate(10000);
 }

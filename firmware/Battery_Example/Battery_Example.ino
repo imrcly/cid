@@ -21,7 +21,7 @@ float Xiao::GetBatteryVoltage() {
   digitalWrite(VBAT_ENABLE, LOW);
 
   uint32_t adcCount = analogRead(PIN_VBAT);
-  float adcVoltage = adcCount * VBAT_MV_PER_LBS;
+  float adcVoltage = adcCount * VBAT_PER_LBS;
   float vBat = adcVoltage * (1510.0 / 510.0);
 
   digitalWrite(VBAT_ENABLE, HIGH);
