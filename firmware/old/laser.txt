@@ -1,0 +1,26 @@
+1	:Er01!	VBAT too low, should be >=2.0V
+2	Internal error, don't care
+3	Module Temperature is too low(<-20c)
+4	Module Temperature is too high (>40c)
+5	Target out of measure range
+6	Invalid measure result
+7	Background light is too strong
+8	Laser signal is too weak
+9	Laser signal is too strong
+10	Hardware Fault 1
+11	Hardware fault 2
+12	Hardware fault 3
+13	Hardware fault 4
+14	Hardware fault 5
+15	Laser signal is not stable
+16	Hardware fault 7
+17	Hardware fault 7
+
+O open
+C close
+F fast
+D slow Automatic
+M slow
+S temperature and power
+V module version and serial
+X close the module and pull PWR_ON pin

@@ -1,0 +1,55 @@
+***********  magnometers ***********
+LIS3MDLTR adafruit
+LSM9DS0 adafruit
+BMM150 seeed0 
+MLX90392ELQ
+MPU-9250 sap
+PNI RM3100 bric4
+WT901 https://www.amazon.com/Accelerometer-Acceleration-Gyroscope-Electronic-Magnetometer/dp/B07GBRTB5K?ref_=ast_sto_dp
+
+*********** others ***********
+https://www.adafruit.com/product/4517 9d0f	
+lsm6dsox - 6dof chip - adafruit uses it
+PCF8563 - rtc
+lm8335 i2c expander 8 port
+
+*********** microcontroller ***********
+nRF52840-QIAA  - stay on same footprint path
+https://www.adafruit.com/product/4382 stm feather
+https://www.adafruit.com/product/3406 nRF52840 feather
+https://www.seeedstudio.com/Seeed-XIAO-BLE-Sense-nRF52840-p-5253.html seeed xiao sense
+https://www.seeedstudio.com/Seeed-XIAO-BLE-nRF52840-p-5201.html seeed xiao
+
+*********** buttons/controls ***********
+6 pin 2.54 connector for membrane buttons
+https://www.amazon.com/dp/B071LMK35L/ref=cm_sw_r_api_i_9R541BQC1BXWCBB98PCS_0?th=1
+oled 0.96 screen
+
+*********** power ***********
+ETA6003 - battery controller
+ETA1038 - 5v boost converter
+ETA3410 - step-down converter 
+
+*********** laser ***********
+https://www.egismos.com/laser-range-finder-distance-meter-5M
+https://www.egismos.com/intergrated-photonics-modules/Laser-distance-measurer-module-M5.pdf
+http://www.jrtsensor.com/sale-11867523-m88b-industrial-60m-high-precision-laser-distance-sensor-rs232-45-x-25-x-12mm.html
+laser cover? 620-690nm
+
+*********** research notes ***********
+avoid nickel plated board
+
+https://www.youtube.com/watch?v=y30ATrKpwpU
+magnetic flux (webers) = B"Tesla"(perpendicular)A"area Meters" cos(angle diffence between normal perpendicular line and the magnetic field)
+
+https://www.youtube.com/watch?v=TJT5O-GQUAM&list=PLcJ1NYursFxizN2Tty84nLNzAVUTgUq_w&index=2
+
+U8X8_SSD1306_128X64_NONAME_HW_I2C u8x8(/* clock=*/ PIN_WIRE_SCL, /* data=*/ PIN_WIRE_SDA, /* reset=*/ U8X8_PIN_NONE);   // OLEDs without Reset of the Display
+
+U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* clock=*/ 4, /* data=*/ 5, /* reset=*/ U8X8_PIN_NONE);   // All Boards without Reset of the Display
+
+
+
+
+
+
