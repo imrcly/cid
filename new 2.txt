@@ -1,0 +1,113 @@
+0x00 Memory Control Register | Read/Write | Contains Block Protect bits and Serial Number lock bit
+0x01 Serial Number 8 bytes | Read/Write 	(Read only when SNL is set) | Programmable Serial Number. Locked by setting the Serial Number lock bit in the Memory ControlRegister to ‘1’. 
+0x02
+0x03
+0x04
+0x05
+0x06
+0x07
+0x08
+0x09 Device ID | Read only | Device ID is factory programmed 
+0x0A
+0x0B
+0x0C
+0x0D Reserved | Reserved | Reserved
+0xAA Command Register | Write only Allows commands for STORE, RECALL, AutoStore  Enable/Disable, SLEEP Mode
+
+Data Byte [7:0] Command Description
+0011 1100 STORE STORE SRAM data to nonvolatile memory
+0110 0000 RECALL RECALL data from nonvolatile memory to SRAM
+0101 1001 ASENB Enable AutoStore
+0001 1001 ASDISB Disable AutoStore
+1011 1001 SLEEP Enter Sleep Mode for low power consumption
+
+
+/*Sm, Fm, Fm+ Mode*/
+void I2C_Write_nvSRAM(BYTE slave_Addr,BYTE Addr_MSB, BYTE Addr_LSB, BYTE *Data, int n_Byte)
+{ 
+ int i=0;
+ BYTE txBuffer[2];
+ 
+ txBuffer[0]=Addr_MSB; //Copy I2C slave address in local buffer
+ txBuffer[1]=Addr_LSB; 
+ I2CHW_ClrWrStatus(); //Clear the status register of I2C master
+ I2CHW_fSendStart(slave_Addr, I2CHW_WRITE); //Returns a non zero if slave device ACKs
+ while(!I2CHW_bReadI2CStatus() & I2CHW_WR_COMPLETE); //Wait till all bits are transmitted 
+ for (i=0;i<n_Byte; i++){ 
+  I2CHW_fWrite( Data[i]); //Master transmit data bytes
+  while (!I2CHW_bReadI2CStatus() & I2CHW_WR_COMPLETE);
+ }
+ I2CHW_SendStop (); // Master sends S/Sr to terminate write
+}
+
+
+/*Hs Mode*/
+void I2C_Write_HSMODE_nvSRAM(BYTE slave_Addr,BYTE Addr_MSB, BYTE Addr_LSB, BYTE *Data, int n_Byte)
+{
+ int i=0;
+ BYTE txBuffer[2];
+ txBuffer[0]=Addr_MSB; 
+ txBuffer[1]=Addr_LSB; //Copy I2C slave address in local buffer 
+ I2CHW_ClrWrStatus(); //Clear the status register of I2C master 
+ //0x00001xxx is a HS mode address hence. (Read/Write also don’t care).HS mode command byte can be set anything from 0x08 to 0x0F
+ I2CHW_fSendStart( 0x04, I2CHW_WRITE); //No ACK from any slave. 
+ while(!I2CHW_bReadI2CStatus() & I2CHW_WR_COMPLETE);//Wait till all bits are transmitted 
+ I2CHW_fSendRepeatStart(slave_Addr, I2CHW_WRITE); //Send repeat start with slave ID to access a slave in HS mode.
+ while(!I2CHW_bReadI2CStatus() & I2CHW_WR_COMPLETE);
+ for (i=0;i<n_Byte; i++){
+  I2CHW_fWrite( Data[i]);
+  while(!I2CHW_bReadI2CStatus() & I2CHW_WR_COMPLETE);
+ }
+I2CHW_SendStop (); //Master sends S/Sr to terminate write
+}
+
+
+
+/*Sm, Fm, Fm+ Mode*/
+void I2C_Read_nvSRAM(BYTE slave_Addr, int n_Byte)
+{
+int i=0; 
+BYTE dataRD;
+ 
+ I2CHW_ClrWrStatus();//Clear the status register of I2C master
+ I2CHW_fSendStart( slave_Addr, I2CHW_READ);
+ while(!I2CHW_bReadI2CStatus() & I2CHW_RD_COMPLETE);
+ 
+ for(i=0;i<n_Byte; i++) { 
+  if(i==(n_Byte-1)) {
+   dataRD =I2CHW_bRead (I2CHW_NAKslave); //Master sends NACK for the last read to terminate the Read
+   while(!I2CHW_bReadI2CStatus() & I2CHW_RD_COMPLETE); //Wait till all bits Rcvd 
+  }
+  else {
+   dataRD =I2CHW_bRead (I2CHW_ACKslave);
+   while(!I2CHW_bReadI2CStatus() & I2CHW_RD_COMPLETE);
+  } 
+ } 
+I2CHW_SendStop (); //Master sends S/Sr to terminate Read
+}
+
+
+/*Hs Mode*/
+void I2C_Read_HSMODE_nvSRAM(BYTE slave_Addr, int n_Byte)
+{
+int i=0; 
+BYTE dataRD;
+ 
+ I2CHW_ClrWrStatus();//Clear the status register of I2C master
+ I2CHW_fSendStart( 0x04, I2CHW_READ); //0x0000 1xxx is a HS mode address hence slave addr can be 0x0X. No ACK from any slave.
+ while(!I2CHW_bReadI2CStatus() & I2CHW_RD_COMPLETE);//Wait till all bits received 
+ I2CHW_fSendRepeatStart( slave_Addr, I2CHW_READ); //Send repeat start with slave ID to access a slave in the HS mode. 
+ while(!I2CHW_bReadI2CStatus() & I2CHW_RD_COMPLETE);
+ 
+ for(i=0;i<n_Byte; i++){
+ if(i==(n_Byte-1)) {
+ dataRD =I2CHW_bRead (I2CHW_NAKslave); 
+ while(!I2CHW_bReadI2CStatus() & I2CHW_RD_COMPLETE); 
+ }
+ else {
+ dataRD =I2CHW_bRead (I2CHW_ACKslave);
+ while(!I2CHW_bReadI2CStatus() & I2CHW_RD_COMPLETE);
+ } 
+ } 
+I2CHW_SendStop //Master sends S/Sr to terminate Read
+}

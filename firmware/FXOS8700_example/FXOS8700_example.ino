@@ -5,24 +5,20 @@ Adafruit_FXOS8700 accelmag = Adafruit_FXOS8700(0x8700A, 0x8700B);
 
 void accelereration() {
   sensors_event_t aevent, mevent;
-
-  /* Get a new sensor event */
   accelmag.getEvent(&aevent, &mevent);
 
   /* Display the accel results (acceleration is measured in m/s^2) */
   Serial.print("Accel X: ");
-  Serial.print(aevent.acceleration.x, 4);
+  Serial.print(aevent.acceleration.x);
   Serial.print(" Y: ");
-  Serial.print(aevent.acceleration.y, 4);
+  Serial.print(aevent.acceleration.y);
   Serial.print(" Z: ");
-  Serial.print(aevent.acceleration.z, 4);
+  Serial.print(aevent.acceleration.z);
   Serial.println(" m/s^2");
 }
 
 void magnetic() {
   sensors_event_t aevent, mevent;
-
-  /* Get a new sensor event */
   accelmag.getEvent(&aevent, &mevent);
 
   /* Display the mag results (mag data is in uTesla) */

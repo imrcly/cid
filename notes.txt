@@ -1,17 +1,16 @@
 ***********  magnometers ***********
 LIS3MDLTR adafruit
-LSM9DS0 adafruit
-BMM150 seeed0 
+http://juddzone.com/ALGORITHMS/algorithms.html?fbclid=IwAR2pV_AP-w_fzS6K80i_OaSXLIPOxyoq1O69ktAsfU4IxIBxlX3ztiYwfOk
 MLX90392ELQ
 MPU-9250 sap
 PNI RM3100 bric4
 WT901 https://www.amazon.com/Accelerometer-Acceleration-Gyroscope-Electronic-Magnetometer/dp/B07GBRTB5K?ref_=ast_sto_dp
 
 *********** others ***********
-https://www.adafruit.com/product/4517 9d0f	
-lsm6dsox - 6dof chip - adafruit uses it
-PCF8563 - rtc
+
 lm8335 i2c expander 8 port
+9d0f ICM-20948
+
 
 *********** microcontroller ***********
 nRF52840-QIAA  - stay on same footprint path
@@ -31,10 +30,8 @@ ETA1038 - 5v boost converter
 ETA3410 - step-down converter 
 
 *********** laser ***********
-https://www.egismos.com/laser-range-finder-distance-meter-5M
-https://www.egismos.com/intergrated-photonics-modules/Laser-distance-measurer-module-M5.pdf
-http://www.jrtsensor.com/sale-11867523-m88b-industrial-60m-high-precision-laser-distance-sensor-rs232-45-x-25-x-12mm.html
-laser cover? 620-690nm
+https://img.elecbee.com/ic/download/docx/2020101520535950MmunaulNew703a.docx
+https://www.aliexpress.us/item/2251832637498388.html?spm=a2g0o.order_list.order_list_main.5.13681802idmQVb&gatewayAdapt=glo2usa
 
 *********** research notes ***********
 avoid nickel plated board
@@ -49,7 +46,4 @@ U8X8_SSD1306_128X64_NONAME_HW_I2C u8x8(/* clock=*/ PIN_WIRE_SCL, /* data=*/ PIN_
 U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* clock=*/ 4, /* data=*/ 5, /* reset=*/ U8X8_PIN_NONE);   // All Boards without Reset of the Display
 
 
-
-
-
-
+1.5ut is about 1 degree accuracy
